@@ -30,7 +30,7 @@ const useCalculator = () => {
   };
 
   const resolve = () => {
-    if (!state.operation || state.secondValue) return;
+    if (!state.operation || state.secondValue === "") return;
 
     dispatch({ type: "RESOLVE_OPERATION" });
   };
