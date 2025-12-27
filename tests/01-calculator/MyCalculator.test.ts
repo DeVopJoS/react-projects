@@ -2,7 +2,7 @@ import { test, expect, describe } from "vitest";
 import {
   MyCalculatorReducer,
   getInitialState,
-} from "@/01-calculator/reducer/MyCalculatorReducer";
+} from "@/01-calculator/MyCalculatorReducer";
 
 describe("arithmetic operations", () => {
   test("Should add two numbers", () => {

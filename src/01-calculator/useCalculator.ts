@@ -1,10 +1,7 @@
 import { useReducer } from "react";
-import {
-  MyCalculatorReducer,
-  getInitialState,
-} from "./reducer/MyCalculatorReducer";
+import { MyCalculatorReducer, getInitialState } from "./MyCalculatorReducer";
 
-import type { OperationTypes } from "./reducer/MyCalculatorReducer";
+import type { OperationTypes } from "./MyCalculatorReducer";
 
 const useCalculator = () => {
   const [state, dispatch] = useReducer(MyCalculatorReducer, getInitialState());
