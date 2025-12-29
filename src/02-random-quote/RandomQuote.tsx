@@ -1,6 +1,15 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import useCharacters from "./useCharacters";
 import CharacterCard from "./components/CharacterCard";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 const CharactersLoading = () => {
   return (
@@ -20,7 +29,18 @@ const CharactersLoading = () => {
 };
 
 const RandomQuote = () => {
-  const { characters, error, isLoading } = useCharacters();
+  const {
+    characters,
+    currentPage,
+    error,
+    isLoading,
+    pages,
+    totalPages,
+
+    setCurrentPage,
+    handlePrev,
+    handleNext,
+  } = useCharacters();
 
   if (error) {
     return (
@@ -49,6 +69,38 @@ const RandomQuote = () => {
           ))}
         </section>
       )}
+
+      <Pagination className="text-white">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              onClick={handlePrev}
+              aria-disabled={currentPage === 1}
+            />
+          </PaginationItem>
+
+          {pages.map((page) => (
+            <PaginationItem key={page}>
+              <PaginationLink
+                isActive={currentPage === page}
+                onClick={() => setCurrentPage(page)}
+              >
+                {page}
+              </PaginationLink>
+            </PaginationItem>
+          ))}
+
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext
+              onClick={handleNext}
+              aria-disabled={currentPage === totalPages}
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </div>
   );
 };
