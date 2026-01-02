@@ -1,13 +1,16 @@
+import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Eye, Heart, Share2 } from "lucide-react";
 import type { Character } from "../interfaces/CharacterInterface";
 
 type Props = {
-  character: Character
+  character: Character,
+  isLikeIt: boolean,
+  reacToCharacter: (id: number) => void,
 }
 
-const CharacterCard = ({ character }: Props) => {
+const CharacterCard = memo(({ character, isLikeIt, reacToCharacter }: Props) => {
   return (
     <Card
       key={character.id}
@@ -37,9 +40,10 @@ const CharacterCard = ({ character }: Props) => {
           <Button
             size="sm"
             variant="secondary"
-            className="bg-white/20 text-white backdrop-blur hover:bg-white/30 cursor-pointer"
+            className="bg-white/20 text-white backdrop-blur hover:bg-white/30 cursor-pointer" 
+            onClick={() => reacToCharacter(character.id)}
           >
-            <Heart size={16} />
+            <Heart size={16} fill={isLikeIt ? 'white':'transparent'} />
           </Button>
 
           <Button
@@ -53,6 +57,6 @@ const CharacterCard = ({ character }: Props) => {
       </CardContent>
     </Card>
   );
-};
+});
 
 export default CharacterCard;

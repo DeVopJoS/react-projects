@@ -34,12 +34,14 @@ const RandomQuote = () => {
     currentPage,
     error,
     isLoading,
-    pages,
     totalPages,
+    reactions,
 
-    setCurrentPage,
     handlePrev,
     handleNext,
+    generatePageNumbers,
+    handleReaction, 
+    setPage
   } = useCharacters();
 
   if (error) {
@@ -54,7 +56,8 @@ const RandomQuote = () => {
     <div className="min-h-screen bg-[#0E3239] p-8">
       <header className="mb-10 text-center">
         {isLoading ? (
-          <Skeleton className="text-4xl font-bold text-white" />
+          // <Skeleton className="text-4xl font-bold text-white" />
+          <Skeleton className="mx-auto h-10 w-64" />
         ) : (
           <h1 className="text-4xl font-bold text-white">Rick and Morty</h1>
         )}
@@ -65,12 +68,12 @@ const RandomQuote = () => {
       ) : (
         <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {characters.map((item) => (
-            <CharacterCard key={item.id} character={item} />
+            <CharacterCard key={item.id} character={item} isLikeIt={reactions.includes(item.id)} reacToCharacter={handleReaction}/>
           ))}
         </section>
       )}
 
-      <Pagination className="text-white">
+      <Pagination className="mt-10 text-white">
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
@@ -79,20 +82,27 @@ const RandomQuote = () => {
             />
           </PaginationItem>
 
-          {pages.map((page) => (
-            <PaginationItem key={page}>
-              <PaginationLink
-                isActive={currentPage === page}
-                onClick={() => setCurrentPage(page)}
-              >
-                {page}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
+          {generatePageNumbers().map((page, index) => {
+            if (page === "...") {
+              return (
+                <PaginationItem key={`ellipsis-${index}`}>
+                  <PaginationEllipsis />
+                </PaginationItem>
+              );
+            }
 
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
+            return (
+              <PaginationItem key={page}>
+                <PaginationLink
+                  isActive={currentPage === page}
+                  onClick={() => typeof page === 'number' && setPage(page)}
+                >
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+            );
+          })}
+
           <PaginationItem>
             <PaginationNext
               onClick={handleNext}
