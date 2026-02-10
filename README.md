@@ -11,7 +11,7 @@ Currently, two official plugins are available:
 
 The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
 
-## Expanding the ESLint configuration
+## Expanding the ESLint configuration.
 
 If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
